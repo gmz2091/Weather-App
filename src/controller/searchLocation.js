@@ -42,7 +42,7 @@ const CityLocation = async () => {
     console.log(elements.applicable_date)
   );
   const view = `
-  <div class="text-white m-auto w-1/4 relative text-5xl flex flex-nowrap font-sans font-thin not-italic"> 
+  <div class="text-white m-auto w-1/5 md:w-1/4 relative text-5xl flex flex-nowrap font-sans font-thin not-italic"> 
     <p>${the_temp.toPrecision(
       2
     )}</p><span class="text-2xl absolute -right-3 -bottom-2">°C</span>
