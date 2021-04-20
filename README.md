@@ -8,7 +8,7 @@
 
 <div align="center">
   <h3>
-    <a href="https://{your-demo-link.your-domain}">
+    <a href="https://gmz2091.github.io/Weather-App/">
       Demo
     </a>
     <span> | </span>
