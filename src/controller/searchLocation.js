@@ -1,23 +1,30 @@
 import view from "../view/main.html";
 import getWeather from "../utils/getData";
 import getCityWoeID from "../utils/getCItyWoeID";
+import dataCity from "../locationNames.json";
 
 const SearchLocation = async () => {
   const div = document.createElement("div");
   div.classList = "relative w-4/5 md:w-1/6 top-5 left-5";
   div.innerHTML = view;
   const inputCity = div.querySelector("#locationForm");
+  const locationNames = div.querySelector("#location_names");
+
+  for (let i = 0; i < dataCity.length; i++) {
+    const dataCityNames = `<option value="${dataCity[i]}"></option>`;
+    locationNames.innerHTML += dataCityNames;
+  }
 
   inputCity.addEventListener("submit", (e) => {
     e.preventDefault();
     CityLocation();
     inputCity.reset();
   });
-  navigator.geolocation.getCurrentPosition(function (position) {
+  /*navigator.geolocation.getCurrentPosition(function (position) {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
     console.log(latitude, longitude);
-  });
+  });*/
   return div;
 };
 
@@ -37,10 +44,6 @@ const CityLocation = async () => {
   const wheather = await getCityWoeID(woeidCity);
   const the_temp = wheather.consolidated_weather[0].the_temp;
 
-  console.log("La temperatura actual es de ", the_temp.toPrecision(2), "°C");
-  wheather.consolidated_weather.map((elements) =>
-    console.log(elements.applicable_date)
-  );
   const view = `
   <div class="text-white m-auto w-1/5 md:w-1/4 relative text-5xl flex flex-nowrap font-sans font-thin not-italic"> 
     <p>${the_temp.toPrecision(
