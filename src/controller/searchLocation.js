@@ -8,11 +8,6 @@ const SearchLocation = async () => {
   div.innerHTML = view;
   const inputCity = div.querySelector("#locationForm");
 
-  //const dates = new Date();
-  //const date = dates.toLocaleDateString()
-  //const toDay = new Intl.DateTimeFormat("en-US").format(date);
-  //console.log(toDay)
-
   inputCity.addEventListener("submit", (e) => {
     e.preventDefault();
     CityLocation();
