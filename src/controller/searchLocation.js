@@ -5,7 +5,7 @@ import dataCity from "../locationNames.json";
 
 const SearchLocation = async () => {
   const div = document.createElement("div");
-  div.classList = "relative w-4/5 md:w-1/6 top-5 left-5";
+  div.classList = "relative bg-cloud-img w-full md:w-2/5";
   div.innerHTML = view;
   const inputCity = div.querySelector("#locationForm");
   const locationNames = div.querySelector("#location_names");
@@ -35,6 +35,10 @@ const CityLocation = async () => {
 
   const locationInput = document.getElementById("locationInput");
   const city = locationInput.value;
+  divTemp.innerHTML = "";
+  if (city == "") {
+    return divTemp.appendChild(AlertErr());
+  }
   const data = await getWeather(city);
   const titleCity = data.map((city) => city.title);
   const woeid = data.map((elements) => elements.woeid);
@@ -58,4 +62,14 @@ const CityLocation = async () => {
   `;
   divTemp.innerHTML = view;
   return divTemp;
+};
+
+const AlertErr = () => {
+  const div = document.createElement("div");
+  div.classList = "bg-red-300 mt-4 text-red-900 text-white px-4 py-2 rounded";
+  div.innerHTML = `<p class="font-black font-serif">El campo esta vacio, Ingrese una opcion valida</p>`;
+  setTimeout(() => {
+    div.remove();
+  }, 3000);
+  return div;
 };
