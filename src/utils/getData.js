@@ -1,10 +1,9 @@
 const getWeather = async (city) => {
-  const div = document.getElementById('temperature')
+  const div = document.getElementById("temperature");
   const corAPI = `https://cors-anywhere.herokuapp.com/`;
   const API = `https://www.metaweather.com/api/location/search/?query=${city}`;
-  div.innerHTML = ''
-  div.appendChild(Spinner())
-  console.log(Spinner())
+  div.innerHTML = "";
+  div.appendChild(Spinner());
   try {
     const urlAPI = `${corAPI}${API}`;
     const res = await fetch(urlAPI, {
