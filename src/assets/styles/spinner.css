@@ -48,3 +48,8 @@
   }
 }
 
+.bg-img-cloud {
+  background-repeat: no-repeat;
+  background-image: url("../img/Cloud-background.png");
+  background-position-x: center;
+}
