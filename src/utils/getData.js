@@ -15,7 +15,7 @@ const getWeather = async (city) => {
     const data = res.json();
     return data;
   } catch (err) {
-    console.log(err);
+    console.log("Existe un error", err);
   }
 };
 
