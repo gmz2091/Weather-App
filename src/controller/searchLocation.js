@@ -9,6 +9,21 @@ const SearchLocation = async () => {
   div.innerHTML = view;
   const inputCity = div.querySelector("#locationForm");
   const locationNames = div.querySelector("#location_names");
+  const side_menu = div.querySelector("#side_menu");
+  const button_search = div.querySelector("#button_search");
+  const button_search_close = div.querySelector("#button_search_close");
+
+  button_search.addEventListener("click", () => {
+    if (side_menu.classList.contains("-translate-x-full")) {
+      return side_menu.classList.remove("-translate-x-full");
+    }
+  });
+
+  button_search_close.addEventListener("click", () => {
+    if (!(side_menu.classList.contains("translate-x-full"))) {
+      return side_menu.classList = "bg-gray-850 transform -translate-x-full transition-all easy-in w-full h-screen col-start-1 col-end-4 relative"
+    }
+  });
 
   for (let i = 0; i < dataCity.length; i++) {
     const dataCityNames = `<option value="${dataCity[i]}"></option>`;
