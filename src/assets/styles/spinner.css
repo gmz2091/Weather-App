@@ -51,5 +51,11 @@
 .bg-img-cloud {
   background-repeat: no-repeat;
   background-image: url("../img/Cloud-background.png");
-  background-position-x: center;
+  background-position: -12% 5%;
+}
+
+@media (max-width: 769px) {
+  .bg-img-cloud {
+    background-position: 60% 5%;
+  }
 }
