@@ -12,7 +12,7 @@
 >
   <button
     id="button_search_close"
-    class="bg-white bg-opacity-25 w-10 h-10 rounded-full flex items-center justify-center p-2 shadow-lg absolute right-20 top-4"
+    class="bg-white bg-opacity-25 w-10 h-10 rounded-full flex items-center justify-center p-2 shadow-lg absolute md:right-20 md:top-4 right-4 bottom-4"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -69,9 +69,11 @@
 
 <div
   id="consolidated_weather"
-  class="w-full bg-gray-870 h-screen col-start-4 col-end-11 flex items-center justify-center"
+  class="w-full bg-gray-870 md:h-screen col-start-4 col-end-11 flex md:items-center md:justify-center"
 >
-  <div class="w-10/12 grid grid-cols-2 grid-rows-2 gap-10 m-auto">
+  <div
+    class="w-10/12 grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-10 m-auto mt-12 mb-12"
+  >
     <div class="w-full h-60 bg-gray-850 relative">
       <div class="text-white flex items-center justify-center mt-2">
         <p>Wind status</p>
