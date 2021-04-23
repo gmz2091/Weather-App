@@ -1,34 +1,52 @@
-<div
-  class="bg-white bg-opacity-25 w-10 h-10 rounded-full flex items-center justify-center p-2 shadow-lg absolute right-8 inset-y-5"
->
-  <img src="../assets/img/gps.svg" alt="gps" />
+<div class="w-full h-screen col-start-1 col-end-4 relative">
+  <div
+    class="bg-white bg-opacity-25 w-10 h-10 rounded-full flex items-center justify-center p-2 shadow-lg absolute right-4 top-4"
+  >
+    <img src="../assets/img/gps.svg" alt="gps" />
+  </div>
+  <form
+    action="POST"
+    id="locationForm"
+    class="relative w-4/6 md:w-1/2 top-5 left-5"
+  >
+    <input
+      class="rounded-sm bg-white bg-opacity-5 border-gray-300 border px-4 py-2 w-full transition-all ease-in focus:outline-none text-white"
+      type="search"
+      id="locationInput"
+      list="location_names"
+    />
+    <button type="submit" id="button" class="absolute px-4 py-2 right-10 top-0">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 text-gray-300"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          class="text-gray-200"
+        />
+      </svg>
+    </button>
+  </form>
+
+  <div id="temperature"></div>
 </div>
-<form action="POST" id="locationForm" class="relative w-1/2 top-5 left-5">
-  <input
-    class="rounded-sm bg-transparent border-gray-300 border px-4 py-2 w-full transition-all ease-in focus:outline-none text-white"
-    type="search"
-    id="locationInput"
-    list="location_names"
-  />
-  <button type="submit" id="button" class="absolute px-4 py-2 right-10 top-0">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="h-6 w-6 text-gray-300"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-        class="text-gray-200"
-      />
-    </svg>
-  </button>
-</form>
 
-<div id="temperature"></div>
+<div id="consolidated_weather" class="bg-gray-870 h-screen w-full col-start-4 col-end-11">
+  <p>Texto</p>
+  <p>Texto</p>
+  <p>Texto</p>
+  <p>Texto</p>
+  <p>Texto</p>
+  <p>Texto</p>
+  <p>Texto</p>
+  <p>Texto</p>
+  <p>Texto</p>
+</div>
 
-<datalist id="location_names"> </datalist>
+<datalist id="location_names"></datalist>
