@@ -12,7 +12,7 @@ const getCityWoeID = async (woeid) => {
     const data = res.json();
     return data;
   } catch (err) {
-    console.log(err);
+    console.log("Existe un error en getCityWoeID", err);
   }
 };
 
