@@ -1,54 +1,33 @@
-<div class="relative">
-  <button
-    id="button_search"
-    class="bg-gray-870 w-4/5 py-4 text-white absolute left-10 top-4"
-  >
-    Search Location
-  </button>
-</div>
-<div
-  id="side_menu"
-  class="bg-gray-850 transform -translate-x-full transition-all easy-in w-full h-screen col-start-1 col-end-4 relative"
->
-  <button
-    id="button_search_close"
-    class="bg-white bg-opacity-25 w-10 h-10 rounded-full flex items-center justify-center p-2 shadow-lg absolute md:right-20 md:top-4 right-4 bottom-4"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="h-6 w-6 text-white"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
+<div class="md:fixed bg-img-cloud w-full md:w-2/6">
+  <div class="relative">
+    <button
+      id="button_search"
+      class="bg-gray-870 w-4/5 py-4 text-white absolute left-2 top-4 z-10"
     >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M6 18L18 6M6 6l12 12"
-      ></path>
-    </svg>
-  </button>
-  <div
-    class="bg-white bg-opacity-25 w-10 h-10 rounded-full flex items-center justify-center p-2 shadow-lg absolute right-4 top-4"
-  >
-    <img src="../assets/img/gps.svg" alt="gps" />
+      Search Location
+    </button>
+    <div
+      id="find-me"
+      class="bg-white cursor-pointer bg-opacity-25 w-10 h-10 rounded-full flex items-center justify-center p-2 shadow-lg absolute right-4 md:right-1 lg:right-4 top-6 z-10"
+    >
+      <img src="../assets/img/gps.svg" alt="gps" />
+    </div>
+    <div
+      id="id_temp"
+      class="w-full h-screen col-start-1 col-end-4 absolute mt-12"
+    ></div>
   </div>
-  <form
-    action="POST"
-    id="locationForm"
-    class="relative w-4/6 md:w-1/2 top-5 left-5"
+  <div
+    id="side_menu"
+    class="bg-gray-850 transform -translate-x-full transition-all easy-in w-full h-screen col-start-1 col-end-4 relative z-50"
   >
-    <input
-      class="rounded-sm bg-white bg-opacity-5 border-gray-300 border px-4 py-2 w-full transition-all ease-in focus:outline-none text-white"
-      type="search"
-      id="locationInput"
-      list="location_names"
-    />
-    <button type="submit" id="button" class="absolute px-4 py-2 right-10 top-0">
+    <button
+      id="button_search_close"
+      class="bg-white bg-opacity-25 w-10 h-10 rounded-full flex items-center justify-center p-2 shadow-lg absolute md:right-4 md:top-4 right-4 bottom-20"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        class="h-6 w-6 text-gray-300"
+        class="h-6 w-6 text-white"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -57,40 +36,132 @@
           stroke-linecap="round"
           stroke-linejoin="round"
           stroke-width="2"
-          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-          class="text-gray-200"
-        />
+          d="M6 18L18 6M6 6l12 12"
+        ></path>
       </svg>
     </button>
-  </form>
+    <form
+      action="POST"
+      id="locationForm"
+      class="relative w-4/6 md:w-3/5 top-5 left-5"
+    >
+      <input
+        placeholder="Select Location "
+        class="rounded-sm bg-white bg-opacity-5 border-gray-300 border px-4 py-2 w-full transition-all ease-in focus:outline-none text-white"
+        type="search"
+        id="locationInput"
+        list="location_names"
+      />
+      <button
+        type="submit"
+        id="button"
+        class="absolute px-4 py-2 right-10 top-0"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 text-gray-300"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            class="text-gray-200"
+          />
+        </svg>
+      </button>
+    </form>
 
-  <div id="temperature"></div>
+    <div id="temperature"></div>
+  </div>
 </div>
 
 <div
   id="consolidated_weather"
-  class="w-full bg-gray-870 md:h-screen col-start-4 col-end-11 flex md:items-center md:justify-center"
+  class="w-full bg-gray-870 col-start-4 col-end-11 flex justify-center"
 >
-  <div
-    class="w-10/12 grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-10 m-auto mt-12 mb-12"
-  >
-    <div class="w-full h-60 bg-gray-850 relative">
-      <div class="text-white flex items-center justify-center mt-2">
-        <p>Wind status</p>
-      </div>
-      <div class="text-white flex items-center justify-center relative top-10">
-        <p class="text-8xl">7</p>
-        <span class="text-2xl absolute bottom-0 right-28">mph</span>
-      </div>
+  <div class="grid grid-cols-1 place-items-center w-full mb-12 md:mb-0">
+    <section class="md:px-2 flex justify-center">
       <div
-        class="text-white flex items-center justify-center absolute bottom-2 w-full"
+        id="temperature_to_day"
+        class="xs:w-10/12 xm:w-2/3 md:w-full grid grid-cols-2 md:grid-cols-5 gap-4 relative top-5 mb-20"
       >
-        <p>Wind status</p>
+        <div class="w-full h-60 md:h-44 lg:h-52 bg-gray-850">
+          <div class="flex justify-center mt-5 mb-2">
+            <p class="text-white">Tomorrow</p>
+          </div>
+          <div id="img_temp" class="flex justify-center mb-10">
+            <img class="w-1/2 h-1/2" src="../assets/img/sn.svg" alt="" />
+          </div>
+          <div class="flex justify-between w-10/12 m-auto">
+            <p id="max_temp" class="text-white">0°C</p>
+            <p id="min_temp" class="text-gray-860">0°C</p>
+          </div>
+        </div>
+        <div id="date_#1" class="w-full h-60 md:h-44 lg:h-52 bg-gray-850"></div>
+        <div class="w-full h-60 md:h-44 lg:h-52 bg-gray-850">
+          <div class="flex justify-center mt-5 mb-2">
+            <p class="text-white">Tomorrow</p>
+          </div>
+          <div class="flex justify-center mb-10">
+            <img class="w-1/2 h-1/2" src="../assets/img/sn.svg" alt="" />
+          </div>
+          <div class="flex justify-between w-10/12 m-auto">
+            <p class="text-white">16°C</p>
+            <p class="text-gray-860">16°C</p>
+          </div>
+        </div>
+        <div class="w-full h-60 md:h-44 lg:h-52 bg-gray-850">
+          <div class="flex justify-center mt-5 mb-2">
+            <p class="text-white">Tomorrow</p>
+          </div>
+          <div class="flex justify-center mb-10">
+            <img class="w-1/2 h-1/2" src="../assets/img/sn.svg" alt="" />
+          </div>
+          <div class="flex justify-between w-10/12 m-auto">
+            <p class="text-white">16°C</p>
+            <p class="text-gray-860">16°C</p>
+          </div>
+        </div>
+        <div class="w-full h-60 md:h-44 lg:h-52 bg-gray-850">
+          <div class="flex justify-center mt-5 mb-2">
+            <p class="text-white">Tomorrow</p>
+          </div>
+          <div class="flex justify-center mb-10">
+            <img class="w-1/2 h-1/2" src="../assets/img/sn.svg" alt="" />
+          </div>
+          <div class="flex justify-between w-10/12 m-auto">
+            <p class="text-white">16°C</p>
+            <p class="text-gray-860">16°C</p>
+          </div>
+        </div>
       </div>
+    </section>
+
+    <div class="w-10/12 grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-10">
+      <div class="w-full h-60 bg-gray-850 relative">
+        <div class="text-white flex items-center justify-center mt-2">
+          <p id="" class="font-bold">Wind status</p>
+        </div>
+        <div
+          class="text-white flex items-center justify-center relative top-10"
+        >
+          <p class="text-8xl">7</p>
+          <span class="text-2xl absolute bottom-0 right-28">mph</span>
+        </div>
+        <div
+          class="text-white flex items-center justify-center absolute bottom-2 w-full"
+        >
+          <p>Wind status</p>
+        </div>
+      </div>
+      <div class="w-full h-60 bg-gray-850"></div>
+      <div class="w-full h-40 bg-gray-850"></div>
+      <div class="w-full h-40 bg-gray-850"></div>
     </div>
-    <div class="w-full h-60 bg-gray-850"></div>
-    <div class="w-full h-60 bg-gray-850"></div>
-    <div class="w-full h-60 bg-gray-850"></div>
   </div>
 </div>
 

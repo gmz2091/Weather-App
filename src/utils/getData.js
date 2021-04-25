@@ -4,6 +4,7 @@ const getWeather = async (city) => {
   const API = `https://www.metaweather.com/api/location/search/?query=${city}`;
   div.innerHTML = "";
   div.appendChild(Spinner());
+
   try {
     const urlAPI = `${corAPI}${API}`;
     const res = await fetch(urlAPI, {

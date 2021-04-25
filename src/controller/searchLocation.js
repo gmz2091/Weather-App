@@ -2,16 +2,29 @@ import view from "../view/main.html";
 import getWeather from "../utils/getData";
 import getCityWoeID from "../utils/getCItyWoeID";
 import dataCity from "../locationNames.json";
+import hc from "../assets/img/hc.png";
+import lc from "../assets/img/lc.png";
+import s from "../assets/img/s.png";
+import h from "../assets/img/h.png";
+import hr from "../assets/img/hr.png";
+import lr from "../assets/img/lr.png";
+import sl from "../assets/img/sl.png";
+import sn from "../assets/img/sn.png";
+import t from "../assets/img/t.png";
+import c from "../assets/img/c.png";
+import getCityLatt from "../utils/getDataLatt";
 
 const SearchLocation = async () => {
   const div = document.createElement("section");
-  div.classList = "bg-gray-850 bg-img-cloud w-full md:grid md:grid-cols-9";
+  div.classList = "bg-gray-850 w-full md:grid md:grid-cols-9";
   div.innerHTML = view;
   const inputCity = div.querySelector("#locationForm");
   const locationNames = div.querySelector("#location_names");
   const side_menu = div.querySelector("#side_menu");
   const button_search = div.querySelector("#button_search");
   const button_search_close = div.querySelector("#button_search_close");
+
+  div.querySelector("#find-me").addEventListener("click", geoFindMe);
 
   button_search.addEventListener("click", () => {
     if (side_menu.classList.contains("-translate-x-full")) {
@@ -20,8 +33,9 @@ const SearchLocation = async () => {
   });
 
   button_search_close.addEventListener("click", () => {
-    if (!(side_menu.classList.contains("translate-x-full"))) {
-      return side_menu.classList = "bg-gray-850 transform -translate-x-full transition-all easy-in w-full h-screen col-start-1 col-end-4 relative"
+    if (!side_menu.classList.contains("translate-x-full")) {
+      return (side_menu.classList =
+        "bg-gray-850 transform -translate-x-full transition-all easy-in w-full h-screen col-start-1 col-end-4 relative z-50");
     }
   });
 
@@ -35,22 +49,25 @@ const SearchLocation = async () => {
     CityLocation();
     inputCity.reset();
   });
-  /*navigator.geolocation.getCurrentPosition(function (position) {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
-    console.log(latitude, longitude);
-  });*/
   return div;
 };
 
 export default SearchLocation;
 
 const CityLocation = async () => {
+  const max_temp = document.querySelector("#max_temp");
+  const min_temp = document.querySelector("#min_temp");
+  const img_temp = document.querySelector("#img_temp");
   const divTemp = document.getElementById("temperature");
+  const date_1 = document.getElementById("date_#1");
+  const temperature_to_day = document.getElementById("temperature_to_day");
 
   const locationInput = document.getElementById("locationInput");
   const city = locationInput.value;
   divTemp.innerHTML = "";
+  temperature_to_day.innerHTML = "";
+  temperature_to_day.appendChild(Spinner());
+
   if (city == "") {
     return divTemp.appendChild(AlertErr());
   }
@@ -59,20 +76,26 @@ const CityLocation = async () => {
   const woeid = data.map((elements) => elements.woeid);
   const cityName = titleCity[0];
   const woeidCity = woeid[0];
+  const dateArray = [];
+
   const wheather = await getCityWoeID(woeidCity);
+
+  const idx = wheather.consolidated_weather.filter(
+    (element, index) => index >= 1
+  );
+
   const the_temp = wheather.consolidated_weather[0].the_temp;
   const weather_state_name =
     wheather.consolidated_weather[0].weather_state_name;
-  console.log(weather_state_name);
 
   const view = `
 <div class="flex justify-center relative top-10">${weather_name_func(
     weather_state_name
   )}</div>
-  <div class="text-white w-1/5 m-auto relative top-9 text-8xl flex justify-center font-sans"> 
+  <div class="text-white w-1/3 m-auto relative top-9 text-8xl flex justify-center font-sans"> 
     <p>${the_temp.toPrecision(
       2
-    )}</p><span class="text-2xl absolute -right-2 -bottom-2">°C</span>
+    )}</p><span class="text-2xl absolute -right-2 -bottom-2"></span>
   </div>  
   <div class="text-gray-300 flex items-center justify-center mt-20 md:mt-36"><span><svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mr-2 text-gray-860" viewBox="0 0 20 20" fill="currentColor">
     <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
@@ -81,6 +104,25 @@ const CityLocation = async () => {
   <div class="flex justify-center text-white absolute inset-x-0 bottom-4">
     <p>${weather_state_name}</p>
   </div>
+  ${idx.map((elements) => {
+    if (document.querySelector(".spinner")) {
+      document.querySelector(".spinner").remove();
+    }
+
+    const datees = new Date(elements.applicable_date).toDateString();
+    temperature_to_day.innerHTML += `<div class="w-full h-60 md:h-44 lg:h-52 bg-gray-850">
+          <div class="flex justify-center mt-5 mb-2">
+            <p class="text-white">${datees}</p>
+          </div>
+          <div class="flex justify-center mb-10">
+          ${weather_name_func(elements.weather_state_name)}
+          </div>
+          <div class="flex justify-between w-10/12 m-auto">
+            <p class="text-white">${elements.min_temp.toPrecision(2)}°C</p>
+            <p class="text-gray-860">${elements.max_temp.toPrecision(2)}°C</p>
+          </div>
+        </div> `;
+  })}
     
   `;
   divTemp.innerHTML = view;
@@ -100,41 +142,93 @@ const AlertErr = () => {
 
 const weather_name_func = (weather_state_name) => {
   const weather_state_name_IMG = {
-    lightCloud: "https://www.metaweather.com/static/img/weather/lc.svg",
-    snow: "https://www.metaweather.com/static/img/weather/sn.svg",
-    sleet: "https://www.metaweather.com/static/img/weather/sl.svg",
-    hail: "https://www.metaweather.com/static/img/weather/h.svg",
-    thunderstorm: "https://www.metaweather.com/static/img/weather/t.svg",
-    heavyRain: "https://www.metaweather.com/static/img/weather/hr.svg",
-    lightRain: "https://www.metaweather.com/static/img/weather/lr.svg",
-    showers: "https://www.metaweather.com/static/img/weather/s.svg",
-    heavyCloud: "https://www.metaweather.com/static/img/weather/hc.svg",
-    clear: "https://www.metaweather.com/static/img/weather/c.svg",
+    lightCloud: lc,
+    snow: sn,
+    sleet: sl,
+    hail: h,
+    thunderstorm: t,
+    heavyRain: hr,
+    lightRain: lr,
+    showers: s,
+    heavyCloud: hc,
+    clear: c,
   };
 
   switch (weather_state_name) {
     case "Light Cloud":
-      return `<img class="w-52" src="${weather_state_name_IMG.lightCloud}" alt="" />`;
+      return `<img class=" w-1/2 h-1/2" src="${weather_state_name_IMG.lightCloud}" alt="" />`;
     case "Snow":
-      return `<img class="w-52" src="${weather_state_name_IMG.snow}" alt="" />`;
+      return `<img class=" w-1/2 h-1/2" src="${weather_state_name_IMG.snow}" alt="" />`;
     case "Sleet":
-      return `<img class="w-52" src="${weather_state_name_IMG.sleet}" alt="" />`;
+      return `<img class=" w-1/2 h-1/2" src="${weather_state_name_IMG.sleet}" alt="" />`;
     case "Hail":
-      return `<img class="w-52" src="${weather_state_name_IMG.hail}" alt="" />`;
+      return `<img class=" w-1/2 h-1/2" src="${weather_state_name_IMG.hail}" alt="" />`;
     case "Thunderstorm":
-      return `<img class="w-52" src="${weather_state_name_IMG.thunderstorm}" alt="" />`;
+      return `<img class=" w-1/2 h-1/2" src="${weather_state_name_IMG.thunderstorm}" alt="" />`;
     case "Heavy Rain":
-      return `<img class="w-52" src="${weather_state_name_IMG.heavyRain}" alt="" />`;
+      return `<img class=" w-1/2 h-1/2" src="${weather_state_name_IMG.heavyRain}" alt="" />`;
     case "Light Rain":
-      return `<img class="w-52" src="${weather_state_name_IMG.lightRain}" alt="" />`;
+      return `<img class=" w-1/2 h-1/2" src="${weather_state_name_IMG.lightRain}" alt="" />`;
     case "Showers":
-      return `<img class="w-52" src="${weather_state_name_IMG.showers}" alt="" />`;
+      return `<img class=" w-1/2 h-1/2" src="${weather_state_name_IMG.showers}" alt="" />`;
     case "Heavy Cloud":
-      return `<img class="w-52" src="${weather_state_name_IMG.heavyCloud}" alt="" />`;
+      return `<img class=" w-1/2 h-1/2" src="${weather_state_name_IMG.heavyCloud}" alt="" />`;
     case "Clear":
-      return `<img class="w-52" src="${weather_state_name_IMG.clear}" alt="" />`;
+      return `<img class=" w-1/2 h-1/2" src="${weather_state_name_IMG.clear}" alt="" />`;
     default:
       console.log("No existe");
       break;
   }
+};
+
+const geoFindMe = () => {
+  const id_temp = document.getElementById("id_temp");
+  const success = async (position) => {
+    const latitude = position.coords.latitude.toPrecision(4);
+    const longitude = position.coords.longitude.toPrecision(5);
+
+    const dataLatt = await getCityLatt(latitude, longitude);
+
+    const woeidLatt = dataLatt[0].woeid;
+    console.log(woeidLatt)
+    const data = await getCityWoeID(woeidLatt);
+    id_temp.innerHTML = `<div class="flex justify-center relative top-10">${weather_name_func(
+      data.consolidated_weather[0].weather_state_name
+    )}</div>
+    <div class="text-white w-1/3 m-auto relative top-9 text-8xl flex justify-center font-sans"> 
+      <p>${data.consolidated_weather[0].the_temp.toPrecision(
+        2
+      )}</p><span class="text-2xl absolute -right-2 -bottom-2"></span>
+    </div>  
+    <div class="relative text-gray-300 flex items-center justify-center mt-12 md:mt-12"><span><svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mr-2 text-gray-860" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+      </svg></span><p class="text-4xl text-white">${data.title}</p>
+      <div class="flex justify-center text-white absolute top-12">
+      <p>You'r Location</p>
+    </div>
+    </div>
+    <div class="flex justify-center text-white absolute inset-x-0 bottom-12">
+      <p>${data.consolidated_weather[0].weather_state_name}</p>
+    </div>`;
+  };
+
+  function error() {
+    console.error("Unable to retrieve your location");
+  }
+
+  if (!navigator.geolocation) {
+    status.textContent = "Geolocation is not supported by your browser";
+  } else {
+    navigator.geolocation.getCurrentPosition(success, error);
+  }
+};
+
+const Spinner = () => {
+  const div = document.createElement("div");
+  div.classList = "spinner";
+  div.innerHTML = `
+    <div class="double-bounce1"></div>
+    <div class="double-bounce2"></div>
+  `;
+  return div;
 };
