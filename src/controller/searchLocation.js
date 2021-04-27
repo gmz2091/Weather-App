@@ -61,6 +61,10 @@ const CityLocation = async () => {
   const divTemp = document.getElementById("temperature");
   const date_1 = document.getElementById("date_#1");
   const temperature_to_day = document.getElementById("temperature_to_day");
+  const progress_bar_humidity = document.getElementById(
+    "progress_bar_humidity"
+  );
+  const humidity_location = document.getElementById("humidity_location")
 
   const locationInput = document.getElementById("locationInput");
   const city = locationInput.value;
@@ -79,6 +83,9 @@ const CityLocation = async () => {
   const dateArray = [];
 
   const wheather = await getCityWoeID(woeidCity);
+  const humidity = wheather.consolidated_weather[0].humidity;
+  progress_bar_humidity.style.width = `${humidity}%`;
+  humidity_location.innerText = `${humidity}`
 
   const idx = wheather.consolidated_weather.filter(
     (element, index) => index >= 1
@@ -190,7 +197,7 @@ const geoFindMe = () => {
     const dataLatt = await getCityLatt(latitude, longitude);
 
     const woeidLatt = dataLatt[0].woeid;
-    console.log(woeidLatt)
+    console.log(woeidLatt);
     const data = await getCityWoeID(woeidLatt);
     id_temp.innerHTML = `<div class="flex justify-center relative top-10">${weather_name_func(
       data.consolidated_weather[0].weather_state_name
