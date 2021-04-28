@@ -89,80 +89,32 @@
         id="temperature_to_day"
         class="w-full grid grid-cols-2 md:grid-cols-5 gap-4 relative top-5 mb-20"
       >
-        <div class="w-full h-60 md:h-44 lg:h-52 bg-gray-850">
-          <div class="flex justify-center mt-5 mb-2">
-            <p class="text-white">Tomorrow</p>
-          </div>
-          <div id="img_temp" class="flex justify-center mb-10">
-            <img class="w-1/2 h-1/2" src="../assets/img/sn.svg" alt="" />
-          </div>
-          <div class="flex justify-between w-10/12 m-auto">
-            <p id="max_temp" class="text-white">0°C</p>
-            <p id="min_temp" class="text-gray-860">0°C</p>
-          </div>
-        </div>
-        <div id="date_#1" class="w-full h-60 md:h-44 lg:h-52 bg-gray-850"></div>
-        <div class="w-full h-60 md:h-44 lg:h-52 bg-gray-850">
-          <div class="flex justify-center mt-5 mb-2">
-            <p class="text-white">Tomorrow</p>
-          </div>
-          <div class="flex justify-center mb-10">
-            <img class="w-1/2 h-1/2" src="../assets/img/sn.svg" alt="" />
-          </div>
-          <div class="flex justify-between w-10/12 m-auto">
-            <p class="text-white">16°C</p>
-            <p class="text-gray-860">16°C</p>
-          </div>
-        </div>
-        <div class="w-full h-60 md:h-44 lg:h-52 bg-gray-850">
-          <div class="flex justify-center mt-5 mb-2">
-            <p class="text-white">Tomorrow</p>
-          </div>
-          <div class="flex justify-center mb-10">
-            <img class="w-1/2 h-1/2" src="../assets/img/sn.svg" alt="" />
-          </div>
-          <div class="flex justify-between w-10/12 m-auto">
-            <p class="text-white">16°C</p>
-            <p class="text-gray-860">16°C</p>
-          </div>
-        </div>
-        <div class="w-full h-60 md:h-44 lg:h-52 bg-gray-850">
-          <div class="flex justify-center mt-5 mb-2">
-            <p class="text-white">Tomorrow</p>
-          </div>
-          <div class="flex justify-center mb-10">
-            <img class="w-1/2 h-1/2" src="../assets/img/sn.svg" alt="" />
-          </div>
-          <div class="flex justify-between w-10/12 m-auto">
-            <p class="text-white">16°C</p>
-            <p class="text-gray-860">16°C</p>
-          </div>
-        </div>
+        <div class="w-full h-60 md:h-44 lg:h-52 bg-gray-850"></div>
+        <div class="w-full h-60 md:h-44 lg:h-52 bg-gray-850"></div>
+        <div class="w-full h-60 md:h-44 lg:h-52 bg-gray-850"></div>
+        <div class="w-full h-60 md:h-44 lg:h-52 bg-gray-850"></div>
+        <div class="w-full h-60 md:h-44 lg:h-52 bg-gray-850"></div>
       </div>
     </section>
 
     <div class="w-10/12 grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-10">
-      <div class="w-full h-60 bg-gray-850 relative">
-        <div class="text-white flex items-center justify-center mt-2">
-          <p id="" class="font-bold">Wind status</p>
+      <div class="w-full h-64 bg-gray-850 relative">
+        <div class="text-white flex items-center justify-center mt-4">
+          <p class="text-2xl">Wind status</p>
         </div>
-        <div
-          class="text-white flex items-center justify-center relative top-10"
-        >
-          <p class="text-8xl">7</p>
-          <span class="text-2xl absolute bottom-0 right-28">mph</span>
+        <div class="text-white flex items-stretch mt-9 mb-6 justify-center">
+          <p id="wind_speed" class="text-8xl">0</p>
+          <span class="text-2xl self-center">mph</span>
         </div>
-        <div
-          class="text-white flex items-center justify-center absolute bottom-2 w-full"
-        >
+        <div class="text-white flex items-center justify-center w-full">
           <p>Wind status</p>
         </div>
       </div>
-      <div class="w-full h-60 bg-gray-850 relative">
-        <div class="text-white flex justify-center mt-2">
-          <p id="" class="font-bold">Humidity</p>
+      <div class="w-full h-64 bg-gray-850 relative">
+        <div class="text-white flex justify-center mt-4">
+          <p class="text-2xl">Humidity</p>
         </div>
-        <div class="text-white flex items-center justify-center mb-12">
+        <div class="text-white flex items-center justify-center mt-9 mb-6">
           <p class="text-8xl" id="humidity_location">0</p>
           <span class="text-2xl">%</span>
         </div>
@@ -175,8 +127,24 @@
           ></span>
         </div>
       </div>
-      <div class="w-full h-40 bg-gray-850"></div>
-      <div class="w-full h-40 bg-gray-850"></div>
+      <div class="w-full h-52 bg-gray-850">
+        <div class="text-white flex items-center justify-center mt-6">
+          <p class="text-2xl">Visibility</p>
+        </div>
+        <div class="text-white flex items-stretch mt-6 justify-center">
+          <p id="visibility" class="text-8xl">0</p>
+          <span class="text-2xl self-center">miles</span>
+        </div>
+      </div>
+      <div class="w-full h-52 bg-gray-850">
+        <div class="text-white flex items-center justify-center mt-6">
+          <p class="text-2xl">Air Pressure</p>
+        </div>
+        <div class="text-white flex items-stretch mt-6 justify-center">
+          <p id="air_pressure" class="text-8xl">0</p>
+          <span class="text-2xl self-center">mb</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -26,6 +26,13 @@ const SearchLocation = async () => {
 
   div.querySelector("#find-me").addEventListener("click", geoFindMe);
 
+  const Geo_Data = JSON.parse(localStorage.getItem("Geo_Data"));
+  if (Geo_Data !== null) {
+    console.log(Geo_Data);
+  } else {
+    console.log("No existe Ubicacion Almacenada");
+  }
+
   button_search.addEventListener("click", () => {
     if (side_menu.classList.contains("-translate-x-full")) {
       return side_menu.classList.remove("-translate-x-full");
@@ -49,6 +56,7 @@ const SearchLocation = async () => {
     CityLocation();
     inputCity.reset();
   });
+
   return div;
 };
 
@@ -64,9 +72,11 @@ const CityLocation = async () => {
   const progress_bar_humidity = document.getElementById(
     "progress_bar_humidity"
   );
-  const humidity_location = document.getElementById("humidity_location")
-
+  const humidity_location = document.getElementById("humidity_location");
   const locationInput = document.getElementById("locationInput");
+  const wind_speeds = document.getElementById("wind_speed");
+  const air_pressures = document.getElementById("air_pressure");
+  const visibilitys = document.getElementById("visibility");
   const city = locationInput.value;
   divTemp.innerHTML = "";
   temperature_to_day.innerHTML = "";
@@ -80,12 +90,19 @@ const CityLocation = async () => {
   const woeid = data.map((elements) => elements.woeid);
   const cityName = titleCity[0];
   const woeidCity = woeid[0];
-  const dateArray = [];
+  //Number.parseInt(wind_speed)
 
   const wheather = await getCityWoeID(woeidCity);
   const humidity = wheather.consolidated_weather[0].humidity;
   progress_bar_humidity.style.width = `${humidity}%`;
-  humidity_location.innerText = `${humidity}`
+  humidity_location.innerText = `${humidity}`;
+
+  const mph = wheather.consolidated_weather[0].wind_speed;
+  const mb = wheather.consolidated_weather[0].air_pressure;
+  const miles = wheather.consolidated_weather[0].visibility;
+  wind_speeds.innerText = Number.parseInt(mph);
+  air_pressures.innerText = Number.parseInt(mb);
+  visibilitys.innerText = Number.parseInt(miles);
 
   const idx = wheather.consolidated_weather.filter(
     (element, index) => index >= 1
@@ -189,15 +206,27 @@ const weather_name_func = (weather_state_name) => {
 };
 
 const geoFindMe = () => {
+  const dataGeo = {};
   const id_temp = document.getElementById("id_temp");
   const success = async (position) => {
     const latitude = position.coords.latitude.toPrecision(4);
     const longitude = position.coords.longitude.toPrecision(5);
 
+    console.log(latitude, longitude);
+
     const dataLatt = await getCityLatt(latitude, longitude);
 
     const woeidLatt = dataLatt[0].woeid;
-    console.log(woeidLatt);
+
+    //To localStorage
+    dataGeo.id = woeidLatt;
+    dataGeo.latt = latitude;
+    dataGeo.long = longitude;
+
+    localStorage.setItem("Geo_Data", JSON.stringify(dataGeo));
+
+    //console.log(dataGeo);
+
     const data = await getCityWoeID(woeidLatt);
     id_temp.innerHTML = `<div class="flex justify-center relative top-10">${weather_name_func(
       data.consolidated_weather[0].weather_state_name
