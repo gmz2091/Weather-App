@@ -26,12 +26,7 @@ const SearchLocation = async () => {
 
   div.querySelector("#find-me").addEventListener("click", geoFindMe);
 
-  const Geo_Data = JSON.parse(localStorage.getItem("Geo_Data"));
-  if (Geo_Data !== null) {
-    console.log(Geo_Data);
-  } else {
-    console.log("No existe Ubicacion Almacenada");
-  }
+  WeatherFromLocalStorage();
 
   button_search.addEventListener("click", () => {
     if (side_menu.classList.contains("-translate-x-full")) {
@@ -267,4 +262,33 @@ const Spinner = () => {
     <div class="double-bounce2"></div>
   `;
   return div;
+};
+
+const WeatherFromLocalStorage = async () => {
+  const Geo_Data = JSON.parse(localStorage.getItem("Geo_Data"));
+  if (Geo_Data !== null) {
+    console.log(Geo_Data);
+    const { latt, long, id } = Geo_Data;
+    const data = await getCityWoeID(id);
+    id_temp.innerHTML = `<div class="flex justify-center relative top-10">${weather_name_func(
+      data.consolidated_weather[0].weather_state_name
+    )}</div>
+    <div class="text-white w-1/3 m-auto relative top-9 text-8xl flex justify-center font-sans"> 
+      <p>${data.consolidated_weather[0].the_temp.toPrecision(
+        2
+      )}</p><span class="text-2xl absolute -right-2 -bottom-2"></span>
+    </div>  
+    <div class="relative text-gray-300 flex items-center justify-center mt-12 md:mt-12"><span><svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mr-2 text-gray-860" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+      </svg></span><p class="text-4xl text-white">${data.title}</p>
+      <div class="flex justify-center text-white absolute top-12">
+      <p>You'r Location</p>
+    </div>
+    </div>
+    <div class="flex justify-center text-white absolute inset-x-0 bottom-12">
+      <p>${data.consolidated_weather[0].weather_state_name}</p>
+    </div>`;
+  } else {
+    console.log("No existe Ubicacion Almacenada");
+  }
 };
